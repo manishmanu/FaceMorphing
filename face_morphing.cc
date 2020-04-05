@@ -9,16 +9,15 @@ FaceMorphing::FaceMorphing() {}
 void FaceMorphing::draw_delaunay(cv::Mat img,
                                  std::vector<cv::Point2f> points,
                                  std::vector<cv::Vec3i> triangles) {
-  std::cout << "\ndrawing delaunay traingles\n" << std::endl;
   cv::Rect rect(0, 0, img.size().width, img.size().height);
-  cv::Scalar color = cv::Scalar(0, 0, 255);
+  cv::Scalar color = cv::Scalar(0, 255, 0);
   for (int i = 0; i < triangles.size(); i++) {
     cv::Point2f a = points[triangles[i][0]];
     cv::Point2f b = points[triangles[i][1]];
     cv::Point2f c = points[triangles[i][2]];
-    line(img, a, b, color, 1, 8, 0);
-    line(img, b, c, color, 1, 8, 0);
-    line(img, c, a, color, 1, 8, 0);
+    line(img, a, b, color, 2, 8, 0);
+    line(img, b, c, color, 2, 8, 0);
+    line(img, c, a, color, 2, 8, 0);
   }
 
   cv::imshow("delaunay traingles", img);
@@ -27,7 +26,7 @@ void FaceMorphing::draw_delaunay(cv::Mat img,
 
 void FaceMorphing::drawPoints(cv::Mat img, std::vector<cv::Point2f> points) {
   for (int i = 0; i < points.size(); i++) {
-    cv::circle(img, points[i], 2, cv::Scalar(0, 0, 255), -1, 8, 0);
+    cv::circle(img, points[i], 3, cv::Scalar(0, 255, 0), -1, 8, 0);
   }
   cv::imshow("face landmark points", img);
   cv::waitKey(0);
@@ -163,6 +162,9 @@ cv::Mat FaceMorphing::morphFace(cv::Mat src, cv::Mat dest, double alpha) {
     interimPoints.push_back(cv::Point2f(x, y));
   }
 
+  // drawPoints(src, srcPoints);
+  // drawPoints(dest, destPoints);
+
   // add corners and mid-corner points
   /* o.......o.......o
      .................
@@ -190,6 +192,9 @@ cv::Mat FaceMorphing::morphFace(cv::Mat src, cv::Mat dest, double alpha) {
 
   std::vector<cv::Vec3i> triangles;
   getDelaunyTrianglesIndexes(src.size(), srcPoints, triangles);
+
+  // draw_delaunay(src, srcPoints, triangles);
+  // draw_delaunay(dest, destPoints, triangles);
 
   std::vector<cv::Point2f> src_t, dest_t, interim_t;
   for (int i = 0; i < triangles.size(); i++) {
@@ -225,7 +230,20 @@ void FaceMorphing::writeFaceMorphingVideo(cv::Mat src,
                         cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 30,
                         cv::Size(src.cols, src.rows));
 
-  for (float alpha = 0.f; alpha <= 1.0; alpha = alpha + rate) {
+  int static_frames = 20;
+  float alpha = 0.f;
+  // beginning
+  for (int i = 0; i < static_frames; i++) {
+    cv::Mat morphedImage = morphFace(src, dest, alpha);
+    video.write(morphedImage);
+  }
+
+  for (; alpha <= 1.0; alpha = alpha + rate) {
+    cv::Mat morphedImage = morphFace(src, dest, alpha);
+    video.write(morphedImage);
+  }
+
+  for (int i = 0; i < static_frames; i++) {
     cv::Mat morphedImage = morphFace(src, dest, alpha);
     video.write(morphedImage);
   }

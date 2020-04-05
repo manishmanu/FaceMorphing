@@ -4,12 +4,12 @@
 #include "face_morphing.h"
 
 int main() {
-  cv::Mat ledge = cv::imread("../examples/ledge.jpg");
-  cv::Mat joker = cv::imread("../examples/joker.png");
+  cv::Mat decaprio1 = cv::imread("../examples/decaprio1.jpg");
+  cv::Mat decaprio2 = cv::imread("../examples/decaprio2.jpg");
 
   std::shared_ptr<FaceMorphing> faceMorphing = std::make_shared<FaceMorphing>();
-  faceMorphing->writeFaceMorphingVideo(ledge, joker, 0.015);
+  faceMorphing->writeFaceMorphingVideo(decaprio1, decaprio2, 0.015);
 
-  cv::Mat morphed_image = faceMorphing->morphFace(ledge, joker, 0.5);
+  cv::Mat morphed_image = faceMorphing->morphFace(decaprio1, decaprio2, 0.5);
   cv::imwrite("morphed_image.png", morphed_image);
 }
