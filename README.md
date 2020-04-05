@@ -52,5 +52,5 @@ Run alpha from 0 to 1 at a specific rate (< 0.03 for better results) and put the
 
 ​																	Figure 6. A face morphing video.
 
-This face morphing is built based on the article and code reference provided at [FaceMorphing](https://www.learnopencv.com/face-morph-using-opencv-cpp-python/). This is a CMake project.
+This face morphing is built based on the article [FaceMorphing](https://www.learnopencv.com/face-morph-using-opencv-cpp-python/). This is a CMake project.
 
