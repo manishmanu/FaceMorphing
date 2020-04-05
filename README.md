@@ -1,8 +1,5 @@
 # FaceMorphing
 
-This face morphing is built based on the article and code reference provided at [FaceMorphing](https://www.learnopencv.com/face-morph-using-opencv-cpp-python/). This is a CMake project.
-
-
 
 Face morphing is basically to transform from one face to another seamlessly. A basic face morphing involves blending of two images at a variable rate. But a simple blending will result in undesirable results because of the misalignment in the facial features. A basic blending without facial alignment will look like below:
 
@@ -54,4 +51,6 @@ Run alpha from 0 to 1 at a specific rate (< 0.03 for better results) and put the
 ![](docs/morphing.gif)
 
 ​																	Figure 6. A face morphing video.
+
+This face morphing is built based on the article and code reference provided at [FaceMorphing](https://www.learnopencv.com/face-morph-using-opencv-cpp-python/). This is a CMake project.
 
