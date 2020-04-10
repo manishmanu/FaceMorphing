@@ -1,5 +1,19 @@
 # FaceMorphing
 
+#### Build
+
+1) mkdir build && cd build
+
+2) cmake ..
+
+3) make
+
+This project needs opencv 4.1.0 version or above. (Because of a major bug fix done in 4.1.0 version regarding Delaunay triangulation).
+
+
+
+#### Description
+
 This face morphing is built based on the article and code reference provided at [FaceMorphing](https://www.learnopencv.com/face-morph-using-opencv-cpp-python/). This is a CMake project.
 
 
